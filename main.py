@@ -4,40 +4,46 @@
 
 import pandas as pd
 import streamlit as st
-import altair as alt
 
 import os
-import seaborn as sns
+
 
 
 def score(transactions_csv_file_path,n):
 
 	filenames = os.listdir(transactions_csv_file_path)
 	selected_filename = st.selectbox("Select A file",filenames)
-	return os.path.join(transactions_csv_file_path,selected_filename)
+	return [os.path.join(transactions_csv_file_path,selected_filename),n]
 
 
-scores = score(transactions_csv_file_path='./test_data',n=0) 
+scores = score(transactions_csv_file_path='./test_data',n=3) 
+
+n=scores[1]
 st.write(scores)
-st.info("You Selected {}".format(scores))
-df = pd.read_csv(scores)
+st.info("You Selected {}".format(scores[0]))
+df = pd.read_csv(scores[0])
 df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
-# if st.checkbox("Show Dataset"):
-# number = st.double_input("Number of Rows to View")
+st.text("The first five records")
 st.dataframe(df.head())
-st.dataframe(df[df['customer_id']=='K20008'])
 
 
-x = df.sort_values('transaction_date', ascending=0)
+x = df.sort_values(by=['customer_id', 'transaction_date']).drop_duplicates(["transaction_date", "customer_id"])
+st.text("Sorted records by date and customer id")
+st.dataframe(x)
+m = (x.assign(transaction_date=pd.to_datetime(x['transaction_date']))
+       .groupby('customer_id')['transaction_date']
+       .diff()
+       .gt(pd.Timedelta('1D'))
+       .cumsum())
+df1 = x.groupby(['customer_id', m]).size().max(level='customer_id').sort_values(ascending=False)
+
+# number = st.number_input('Insert a number',1, 10)
+# st.write('The current number is ', number)
+st.text("Sorted records based on 'n value input'")
+st.dataframe(df1.head(n))
+st.text("Final output")
+st.info(df1.head(n).index.get_level_values(0))
 
 
-x["subgroup"] = x["customer_id"].ne(x["customer_id"].shift()).cumsum()
 
-# take the max length of any subgroup that belongs to "name"
-def get_max_consecutive(customers):
-    return x.groupby(["customer_id", "subgroup"]).apply(len)[customers].max()
-l=[]
-for customers in x.customer_id.unique():
-    
-    l.append(f"{customers}: {get_max_consecutive(customers)}")   
-st.info(l)           
+          

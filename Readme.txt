@@ -1,3 +1,10 @@
+-how to use:
+
+1. Clone the github repository
+2. Open Terminal and run  "npm install" to install all the dependencies
+3. On the terminal run "streamlit run main.py"
+
+
 This is your Take-Home interview. This should take only a few hours at most.
 
 Kopo Kopo lends money to its customers who are mostly businesses. We use past Lipa na M-PESA transactions received by
@@ -60,6 +67,9 @@ Notes:
 
 
 The rest is up to you! Feel free to be creative once you have an initial solution. Wow us!
+
+
+
 
 
 
