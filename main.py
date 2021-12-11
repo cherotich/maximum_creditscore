@@ -15,8 +15,9 @@ def score(transactions_csv_file_path,n):
 	selected_filename = st.selectbox("Select A file",filenames)
 	return [os.path.join(transactions_csv_file_path,selected_filename),n]
 
+number = st.number_input('Enter n, max=100',1, 100)
 
-scores = score(transactions_csv_file_path='./test_data',n=3) 
+scores = score(transactions_csv_file_path='./test_data',n=number) 
 
 n=scores[1]
 st.write(scores)
