@@ -4,6 +4,9 @@
 2. Open Terminal and run  "npm install" to install all the dependencies
 3. On the terminal run "streamlit run main.py"
 
+-Link to live app: https://share.streamlit.io/cherotich/maximum_creditscore/main/main.py
+
+
 
 This is your Take-Home interview. This should take only a few hours at most.
 
