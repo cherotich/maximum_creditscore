@@ -6,7 +6,10 @@
 
 -Link to live app: https://share.streamlit.io/cherotich/maximum_creditscore/main/main.py
 
+-Sample app Images
 
+![Screenshot1](https://github.com/cherotich/maximum_creditscore/blob/main/capture1.PNG)
+![Screenshot2](https://github.com/cherotich/maximum_creditscore/blob/main/capture2.PNG)
 
 This is your Take-Home interview. This should take only a few hours at most.
 
